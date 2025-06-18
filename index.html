@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+  </script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+  </script>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Emergent Temporal Correspondences from Video Diffusion Models">
+  <meta name="keywords" content="Diffusion, Matching">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title>Emergent Temporal Correspondences from Video Diffusion Models</title>
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/slider.css">
+  <link rel="stylesheet" href="./static/css/app.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./static/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./static/css/twentytwenty.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/jquery.event.move.js"></script>
+  <script src="./static/js/jquery.twentytwenty.js"></script>
+  <script src="./static/js/slider.js"></script>
+  <script> 
+    $(function(){
+      $("#includeContent").load("teaser.html"); 
+    });
+  </script>
+
+</head>
+<body>
+
+<!-- <section class="hero"> -->
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title publication-title" style="font-size: 46px;">
+            <img src="static/images/difftrack.png" alt="Project Logo" style="max-height: 80px;">
+            Emergent Temporal Correspondences from Video Diffusion Models</h1> 
+          <div class="publication-authors">
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?hl=zh-CN&user=xakYe8MAAAAJ">Jisu Nam<sup>*1</sup></a>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?hl=zh-CN&user=Eo87mRsAAAAJ">Soowon Son<sup>*1</sup></a>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?hl=ko&user=EU52riMAAAAJ">Dahyun Chung<sup>2</sup></a>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.co.kr/citations?hl=ko&user=DqG-ybIAAAAJ">Jiyoung Kim<sup>1</sup></a>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?hl=zh-CN&user=rXRHxkwAAAAJ">Siyoon Jin<sup>1</sup></a>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?hl=zh-CN&user=z4dNJdkAAAAJ">Junhwa Hur<sup>&dagger;3</sup></a>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?hl=zh-CN&user=cIK1hS8AAAAJ">Seungryong Kim<sup>&dagger;1</sup></a>
+            </span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <br>
+              <span class="author-block"><sup>1</sup>KAIST AI <sup>2</sup>Korea University <sup>3</sup>Google DeepMind
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>*</sup> Equal contribution <sup>&dagger;</sup>Co-corresponding author
+          </div>
+        </br>
+          
+          <!-- <h1 class="publication-awards">CVPR 2025</h1> -->
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark"
+                   style="font-size: 16px;">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+            
+              <span class="link-block">
+                <a href="https://github.com/cvlab-kaist/DiffTrack"
+                   class="external-link button is-normal is-rounded is-dark"
+                   style="font-size: 16px;">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+
+            </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+          <div class="content has-text-justified">
+            <p style="font-size: 18px;">
+              We introduce <b>DiffTrack</b>, a framework that unveils how video diffusion transformers (DiTs) establish temporal correspondences during video generation. <b>DiffTrack</b> quantitatively analyzes the roles of different representations, layers, and timesteps within the full 3D attention mechanism of DiTs in the context of temporal matching. As practical applications, <b>DiffTrack</b> can extract motion trajectories along the video generation and also enables zero-shot point tracking on real-world videos.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+
+  <section class="section">
+    <div class="container is-max-widescreen">
+      <div class="columns is-centered">
+        <div class="column is-full">
+          <div class="content has-text-justified">
+            <img class="main-image" src="static/images/teaser.png" alt="Teaser Image" style="width: 100%; height: auto; margin-bottom: 10px;">
+            <p style="font-size: 18px;">
+              <b>Overview of DiffTrack:</b>  
+              DiffTrack reveals how Video Diffusion Transformers (DiTs) establish temporal correspondences during video generation. Given a prompt and starting points in the first frame, DiffTrack tracks how individual points align across subsequent frames in video DiTs (second row), enabling the extraction of coherent motion trajectories (third row) from both generated and real-world videos in a zero-shot manner.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  
+
+    
+   
+  <!-- ABSTRACT -->
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths"> 
+        <h2 class="title">Abstract</h2>
+        <div class="content has-text-justified">
+          <p style="font-size: 18px;">
+            Recent advancements in video diffusion models based on Diffusion Transformers (DiTs) have led to impressive results in generating temporally coherent videos. However, a crucial question remains: how do these models internally represent and establish temporal correspondences across frames?  
+            We introduce <strong>DiffTrack</strong>, the first quantitative analysis framework designed to answer this question. DiffTrack provides a curated prompt-video dataset with pseudo ground-truth motion annotations and novel evaluation metrics to systematically analyze the roles of different representations, layers, and timesteps within the full 3D attention mechanism of DiTs in establishing temporal correspondences.  
+            Our analysis, focusing on CogVideoX, reveals that query-key similarities within specific layers are crucial for temporal matching and that this matching strengthens during the denoising process.  
+            Our work provides crucial insights into the inner workings of video DiTs and establishes a foundation for further research and applications leveraging their temporal understanding. Furthermore, we demonstrate the practical application of DiffTrack in zero-shot point tracking, achieving state-of-the-art performance compared to existing vision foundation models. The dataset and code will be publicly available.  
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title">Analysis of Temporal Matching in CogVideoX-5B</h2>
+        </div>
+      </div>
+  
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+          <img src="static/images/analysis_5b.png" style="width: 100%; margin-top: 20px; margin-bottom: 10px;">
+  
+          <div class="content has-text-justified" style="font-size: 18px;">
+            <ul style="list-style-type: disc; margin-left: 1.5em;">
+              <li>
+                <b><i>Representation selection:</i></b>  
+                Query-key matching achieves higher accuracy than intermediate feature matching, providing better representations for temporal matching.
+              </li>
+              <li>
+                <b><i>Layer-wise analysis:</i></b>  
+                The harmonic mean of query-key matching across layers and timesteps reveals that temporal correspondence is primarily governed by a limited set of layers.
+              </li>
+              <li>
+                <b><i>Noise-level analysis:</i></b>  
+                Temporal matching improves as noise decreases, with early timesteps relying more on text embeddings and self-frame attention, while later timesteps shift towards cross-frame attention for enhanced coherence.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title">DiffTrack for Zero-Shot Point Tracking</h2>
+        </div>
+      </div>
+
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+          <img src="static/images/main_quan.png" style="width: 100%; margin-top: 20px; margin-bottom: 10px;">
+  
+          <div class="content has-text-justified" style="font-size: 18px;">
+            <b>Quantitative comparison on the TAP-Vid datasets:</b>
+            Video DiTs combined with DiffTrack outperform all vision foundation models trained on single images and self-supervised models trained on two-view images or videos for zero-shot tracking.
+          </div>
+        </div>
+      </div>
+  
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+          <!-- Row 1 -->
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h3 class="subtitle is-size-3">DINOv2</h3>
+              <video width="100%" controls>
+                <source src="static/videos/tracking/dino_006.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column has-text-centered">
+              <h3 class="subtitle is-size-3">VFS</h3>
+              <video width="100%" controls>
+                <source src="static/videos/tracking/vfs_006.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column has-text-centered">
+              <h3 class="subtitle is-size-3" style="font-weight: bold;">DiffTrack(CogVideoX-5B)</h3>
+              <video width="100%" controls>
+                <source src="static/videos/tracking/cog_006.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+
+          <!-- Row 3 -->
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <video width="100%" controls>
+                <source src="static/videos/tracking/dino_021.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column has-text-centered">
+              <video width="100%" controls>
+                <source src="static/videos/tracking/vfs_021.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column has-text-centered">
+              <video width="100%" controls>
+                <source src="static/videos/tracking/cog_021.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+
+          <!-- Row 2 -->
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <video width="100%" controls>
+                <source src="static/videos/tracking/dino_017.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column has-text-centered">
+              <video width="100%" controls>
+                <source src="static/videos/tracking/vfs_017.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column has-text-centered">
+              <video width="100%" controls>
+                <source src="static/videos/tracking/cog_017.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+
+          <!-- Row 3 -->
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <video width="100%" controls>
+                <source src="static/videos/tracking/dino_027.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column has-text-centered">
+              <video width="100%" controls>
+                <source src="static/videos/tracking/vfs_027.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column has-text-centered">
+              <video width="100%" controls>
+                <source src="static/videos/tracking/cog_027.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+  
+          <div class="content has-text-justified" style="font-size: 18px;">
+              <b>Qualitative comparison with previous video foundation models:</b>
+              DiffTrack on CogVideoX-5B produces smoother and more accurate trajectories compared to DINOv2 and VFS, which struggle with temporal dynamics and often yield inconsistent tracks.
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+ <br><br>
+
+ <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title">DiffTrack for Motion Enhanced Video Generation</h2>
+      </div>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+
+      <!-- Row 1 -->
+      <div class="columns is-centered">
+        <div class="column is-half has-text-centered">
+          <h4 class="subtitle is-size-3">CogVideoX-5B</h4>
+          <video width="100%" controls>
+            <source src="static/videos/motion/004.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="column is-half has-text-centered">
+          <h4 class="subtitle is-size-3">Motion Enhanced CogVideoX-5B</h4>
+          <video width="100%" controls>
+            <source src="static/videos/motion/video_4.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-full has-text-centered">
+          <p style="font-size: 16px; margin-top: -10px;">
+            <strong>Prompt:</strong><i> "... He takes a slow, appreciative sip, his eyes closing momentarily as he savors the complex flavors. ..."</i>
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="columns is-centered">
+        <div class="column is-half has-text-centered">
+          <video width="100%" controls>
+            <source src="static/videos/motion/087.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="column is-half has-text-centered">
+          <video width="100%" controls>
+            <source src="static/videos/motion/video_87.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-full has-text-centered">
+          <p style="font-size: 16px; margin-top: -10px;">
+            <strong>Prompt:</strong><i> "A determined individual, ...ascends a thick, rugged rope hanging from a towering rock face. ..."</i>
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="columns is-centered">
+        <div class="column is-half has-text-centered">
+          <video width="100%" controls>
+            <source src="static/videos/motion/026.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div class="column is-half has-text-centered">
+          <video width="100%" controls>
+            <source src="static/videos/motion/video_26.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-full has-text-centered">
+          <p style="font-size: 16px; margin-top: -10px;">
+            <strong>Prompt:</strong><i> “... its claws scratching the ground to uncover hidden seeds and insects ...”</i>
+          </p>
+        </div>
+      </div>
+
+
+        <div class="content has-text-justified" style="font-size: 18px;">
+          <b>Qualitative comparison with baseline and motion enhanced video:</b> CAG(Cross-Attention Guidance) enhances temporal matching and corrects motion inconsistencies in the synthesized videos.
+        </div>
+
+      </div>
+    </div>
+  </div>
+    
+    <section class="section">
+      <div class="container is-max-desktop">
+        
+        <!-- Section Title -->
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-8">Analysis Framework: DiffTrack</h2>
+          </div>
+        </div>
+    
+        <!-- Evaluation Dataset Curation -->
+        <div class="columns is-centered">
+          <div class="column is-four-fifths">
+            <div class="content has-text-justified" style="margin-top: 20px; margin-bottom: 10px;">
+              <h3>Evaluation Dataset Curation</h3>
+              <img src="static/images/dataset_example.png" style="width: 100%; margin-top: 20px; margin-bottom: 10px;">
+              <div style="font-size: 18px;">
+                We collect two distinct datasets:  
+                (a) an object dataset for dynamic object-centric videos, and  
+                (b) a scene dataset for static scenes with camera motion.  
+                Each dataset includes 50 text prompts, with 50 videos generated per prompt using CogVideoX-2B.  
+                To assess temporal matching, we predefine starting points in the first frame and obtain pseudo ground-truth trajectories using an off-the-shelf tracking method, CoTracker.
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Temporal Correspondence Estimation -->
+        <div class="columns is-centered">
+          <div class="column is-four-fifths">
+            <div class="content has-text-justified" style="margin-top: 20px; margin-bottom: 10px;">
+              <h3>Temporal Correspondence Estimation</h3>
+              <p style="font-size: 18px;">
+                We evaluate temporal matching by extracting pointwise correspondences across video frames using latent feature descriptors from a video diffusion transformer (DiT).
+              </p>
+              <br>
+    
+              <p style="font-size: 18px;"><b>Matching Cost Computation:</b><br>
+                At each timestep \( t \) and layer \( l \), we compute the matching cost between the descriptors of the first frame and the \( j \)-th frame (\( j \in \{2, \dots, 1+f\} \)):
+              </p>
+    
+              <p>
+                \[
+                \mathbf{C}^{1,j}_{t,l} = \mathtt{Softmax} \left( \frac{\mathbf{D}_{t,l}^1 (\mathbf{D}_{t,l}^j)^T}{\sqrt{d}} \right)
+                \]
+              </p>
+    
+              <p style="font-size: 18px;">
+                where \( \mathbf{D}_{t,l}^1 \) and \( \mathbf{D}_{t,l}^j \) are latent descriptors, and \( d \) is the channel dimension.
+              </p>
+              <br>
+    
+              <p style="font-size: 18px;"><b>Correspondence Estimation:</b><br>
+                Matched points are obtained by selecting the highest scoring location for each query:
+              </p>
+    
+              <p>
+                \[
+                \mathbf{p}^j_{t,l} = \underset{\mathbf{x} \in \Omega}{\mathtt{Argmax}} \ \mathbf{C}^{1,j}_{t,l}(\mathbf{p}^1, \mathbf{x})
+                \]
+              </p>
+    
+              <p style="font-size: 18px;">
+                where \( \mathbf{p}^1 \) is the point in the first frame and \( \Omega \) is the spatial domain.
+              </p>
+              <br>
+    
+              <p style="font-size: 18px;"><b>Trajectory Reconstruction:</b><br>
+                The temporal motion track is formed by concatenating matched points and interpolating back to RGB space:
+              </p>
+    
+              <p>
+                \[
+                \hat{\mathbf{T}}_{t,l} = \mathtt{Interp}\left(\mathtt{Concat}(\mathbf{p}^1, \mathbf{p}^2_{t,l}, \dots, \mathbf{p}^{1+f}_{t,l})\right)
+                \]
+              </p>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Evaluation Metrics -->
+        <div class="columns is-centered">
+          <div class="column is-four-fifths">
+            <div class="content has-text-justified" style="margin-top: 20px; margin-bottom: 10px;">
+              <h3>Evaluation Metrics</h3>
+              <p style="font-size: 18px;">
+                To evaluate temporal consistency in video generation, we propose three complementary metrics:
+              </p>
+              <ul style="font-size: 18px;">
+                <li><b>Matching Accuracy:</b> Measures how precisely points are aligned across frames.</li>
+                <li><b>Confidence Score:</b> Measures how strongly each point attends to its match in the attention map.</li>
+                <li><b>Attention Score:</b> Measures how strongly cross-frame interactions influence during video generation</li>
+              </ul>
+    
+              <p style="font-size: 18px;">
+                These metrics capture different aspects of matching. High accuracy does not guarantee influence on generation if attention score is low, and high confidence does not ensure correct matching. To jointly assess three things, we compute the <b>harmonic mean</b> of the normalized scores, highlighting regions where all accuracy, confidence and attention are high.
+              </p>                
+                
+                <!-- :
+              </p>
+    
+              <p>
+                \[
+                \text{Score} = \frac{2 \cdot \text{Acc} \cdot \text{Affinity}}{\text{Acc} + \text{Affinity}}
+                \]
+              </p> -->
+            </div>
+          </div>
+        </div>
+    
+      </div>
+    </section>
+    
+      
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code></code>
+
+</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            The website template was borrowed from <a href="https://cvlab-kaist.github.io/DreamMatcher/">Jisu Nam</a> and <a href="https://lehduong.github.io/OneDiffusion-homepage/">Duong H. Le</a>.
+            <!-- This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>. -->
+          </p>
+          <!-- <p>
+            This means you are free to borrow the <a
+              href="https://ku-cvlab.github.io/DreamMatcher/">source code</a> of this website,
+            we just ask that you link back to this page in the footer.
+            Please remember to remove the analytics code included in the header of the website which
+            you do not want on your website.
+          </p> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
