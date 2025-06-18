@@ -87,11 +87,11 @@
           </div>
           <div class="is-size-5 publication-authors">
             <br>
-              <span class="author-block"><sup>1</sup>KAIST AI <sup>2</sup>Korea University <sup>3</sup>Google DeepMind
+              <span class="author-block"><sup>1</sup>KAIST AI&emsp;&emsp;&emsp;&emsp;<sup>2</sup>Korea University&emsp;&emsp;&emsp;&emsp;<sup>3</sup>Google DeepMind
           </div>
 
           <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>*</sup> Equal contribution <sup>&dagger;</sup>Co-corresponding author
+            <span class="author-block"><sup>*</sup> Equal contribution. <sup>&dagger;</sup>Co-corresponding author.
           </div>
         </br>
           
@@ -127,7 +127,7 @@
 
     </div>
   </div>
-
+<!-- 
 
   <section class="section">
     <div class="container is-max-desktop">
@@ -142,7 +142,7 @@
       </div>
     </div>
   </section>
-  
+   -->
 
 
   <section class="section">
@@ -154,6 +154,7 @@
             <p style="font-size: 18px;">
               <b>Overview of DiffTrack:</b>  
               DiffTrack reveals how Video Diffusion Transformers (DiTs) establish temporal correspondences during video generation. Given a prompt and starting points in the first frame, DiffTrack tracks how individual points align across subsequent frames in video DiTs (second row), enabling the extraction of coherent motion trajectories (third row) from both generated and real-world videos in a zero-shot manner.
+              As practical applications, <b>DiffTrack</b> also enables 1) motion-enhanced video generation with a novel guidance method and 2) zero-shot point tracking, achieving state-of-the-art performance compared to existing vision foundation models
             </p>
           </div>
         </div>
@@ -162,11 +163,100 @@
   </section>
   
   
+ <div class="container is-max-desktop">
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-four-fifths">
+      <h2 class="title">DiffTrack for Motion Enhanced Video Generation</h2>
+    </div>
+  </div>
+
+  <div class="columns is-centered">
+    <div class="column is-four-fifths">
+
+    <!-- Row 1 -->
+    <div class="columns is-centered">
+      <div class="column is-half has-text-centered">
+        <h4 class="subtitle is-size-3">CogVideoX-5B</h4>
+        <video width="100%" autoplay muted loop playsinline>
+          <source src="static/videos/motion/004.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="column is-half has-text-centered">
+        <h4 class="subtitle is-size-3">Motion Enhanced CogVideoX-5B</h4>
+        <video width="100%" autoplay muted loop playsinline>
+          <source src="static/videos/motion/video_4.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-full has-text-centered">
+        <p style="font-size: 16px; margin-top: -10px;">
+          <strong>Prompt:</strong><i> "... He takes a slow, appreciative sip, his eyes closing momentarily as he savors the complex flavors. ..."</i>
+        </p>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="columns is-centered">
+      <div class="column is-half has-text-centered">
+        <video width="100%" autoplay muted loop playsinline>
+          <source src="static/videos/motion/087.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="column is-half has-text-centered">
+        <video width="100%" autoplay muted loop playsinline>
+          <source src="static/videos/motion/video_87.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-full has-text-centered">
+        <p style="font-size: 16px; margin-top: -10px;">
+          <strong>Prompt:</strong><i> "A determined individual, ...ascends a thick, rugged rope hanging from a towering rock face. ..."</i>
+        </p>
+      </div>
+    </div>
+
+    <!-- Row 3 -->
+    <div class="columns is-centered">
+      <div class="column is-half has-text-centered">
+        <video width="100%" autoplay muted loop playsinline>
+          <source src="static/videos/motion/026.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="column is-half has-text-centered">
+        <video width="100%" autoplay muted loop playsinline>
+          <source src="static/videos/motion/video_26.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-full has-text-centered">
+        <p style="font-size: 16px; margin-top: -10px;">
+          <strong>Prompt:</strong><i> “... its claws scratching the ground to uncover hidden seeds and insects ...”</i>
+        </p>
+      </div>
+    </div>
+
+
+      <div class="content has-text-justified" style="font-size: 18px;">
+        <b>Qualitative comparison with baseline and motion enhanced video:</b> CAG(Cross-Attention Guidance) enhances temporal matching and corrects motion inconsistencies in the synthesized videos.
+      </div>
+
+    </div>
+  </div>
+</div>
 
     
    
   <!-- ABSTRACT -->
-  <div class="container is-max-desktop">
+  <!-- <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths"> 
         <h2 class="title">Abstract</h2>
@@ -180,9 +270,120 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
+
 
   <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title">DiffTrack for Zero-Shot Point Tracking</h2>
+        </div>
+      </div>
+
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+          <img src="static/images/main_quan.png" style="width: 100%; margin-top: 20px; margin-bottom: 10px;">
+  
+          <div class="content has-text-justified" style="font-size: 18px;">
+            <b>Quantitative comparison on the TAP-Vid datasets:</b>
+            Video DiTs combined with DiffTrack outperform all vision foundation models trained on single images and self-supervised models trained on two-view images or videos for zero-shot tracking.
+          </div>
+        </div>
+      </div>
+  
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+          <!-- Row 1 -->
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h3 class="subtitle is-size-3">DINOv2</h3>
+              <video width="100%" autoplay muted loop playsinline>
+                <source src="static/videos/tracking/dino_006.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column has-text-centered">
+              <h3 class="subtitle is-size-3">VFS</h3>
+              <video width="100%" autoplay muted loop playsinline>
+                <source src="static/videos/tracking/vfs_006.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column has-text-centered">
+              <h3 class="subtitle is-size-3" style="font-weight: bold;">DiffTrack(CogVideoX-5B)</h3>
+              <video width="100%" autoplay muted loop playsinline>
+                <source src="static/videos/tracking/cog_006.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+
+          <!-- Row 3 -->
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <video width="100%" autoplay muted loop playsinline>
+                <source src="static/videos/tracking/dino_021.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column has-text-centered">
+              <video width="100%" autoplay muted loop playsinline>
+                <source src="static/videos/tracking/vfs_021.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column has-text-centered">
+              <video width="100%" autoplay muted loop playsinline>
+                <source src="static/videos/tracking/cog_021.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+
+          <!-- Row 2 -->
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <video width="100%" autoplay muted loop playsinline>
+                <source src="static/videos/tracking/dino_017.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column has-text-centered">
+              <video width="100%" autoplay muted loop playsinline>
+                <source src="static/videos/tracking/vfs_017.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column has-text-centered">
+              <video width="100%" autoplay muted loop playsinline>
+                <source src="static/videos/tracking/cog_017.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+
+          <!-- Row 3 -->
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <video width="100%" autoplay muted loop playsinline>
+                <source src="static/videos/tracking/dino_027.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column has-text-centered">
+              <video width="100%" autoplay muted loop playsinline>
+                <source src="static/videos/tracking/vfs_027.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="column has-text-centered">
+              <video width="100%" autoplay muted loop playsinline>
+                <source src="static/videos/tracking/cog_027.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+  
+          <div class="content has-text-justified" style="font-size: 18px;">
+              <b>Qualitative comparison with previous video foundation models:</b>
+              DiffTrack on CogVideoX-5B produces smoother and more accurate trajectories compared to DINOv2 and VFS, which struggle with temporal dynamics and often yield inconsistent tracks.
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+ <br><br>
+ <section class="section">
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
@@ -215,207 +416,6 @@
     </div>
   </section>
   
-
-  <section class="section">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          <h2 class="title">DiffTrack for Zero-Shot Point Tracking</h2>
-        </div>
-      </div>
-
-      <div class="columns is-centered">
-        <div class="column is-four-fifths">
-          <img src="static/images/main_quan.png" style="width: 100%; margin-top: 20px; margin-bottom: 10px;">
-  
-          <div class="content has-text-justified" style="font-size: 18px;">
-            <b>Quantitative comparison on the TAP-Vid datasets:</b>
-            Video DiTs combined with DiffTrack outperform all vision foundation models trained on single images and self-supervised models trained on two-view images or videos for zero-shot tracking.
-          </div>
-        </div>
-      </div>
-  
-      <div class="columns is-centered">
-        <div class="column is-four-fifths">
-          <!-- Row 1 -->
-          <div class="columns is-centered">
-            <div class="column has-text-centered">
-              <h3 class="subtitle is-size-3">DINOv2</h3>
-              <video width="100%" controls>
-                <source src="static/videos/tracking/dino_006.mp4" type="video/mp4">
-              </video>
-            </div>
-            <div class="column has-text-centered">
-              <h3 class="subtitle is-size-3">VFS</h3>
-              <video width="100%" controls>
-                <source src="static/videos/tracking/vfs_006.mp4" type="video/mp4">
-              </video>
-            </div>
-            <div class="column has-text-centered">
-              <h3 class="subtitle is-size-3" style="font-weight: bold;">DiffTrack(CogVideoX-5B)</h3>
-              <video width="100%" controls>
-                <source src="static/videos/tracking/cog_006.mp4" type="video/mp4">
-              </video>
-            </div>
-          </div>
-
-          <!-- Row 3 -->
-          <div class="columns is-centered">
-            <div class="column has-text-centered">
-              <video width="100%" controls>
-                <source src="static/videos/tracking/dino_021.mp4" type="video/mp4">
-              </video>
-            </div>
-            <div class="column has-text-centered">
-              <video width="100%" controls>
-                <source src="static/videos/tracking/vfs_021.mp4" type="video/mp4">
-              </video>
-            </div>
-            <div class="column has-text-centered">
-              <video width="100%" controls>
-                <source src="static/videos/tracking/cog_021.mp4" type="video/mp4">
-              </video>
-            </div>
-          </div>
-
-          <!-- Row 2 -->
-          <div class="columns is-centered">
-            <div class="column has-text-centered">
-              <video width="100%" controls>
-                <source src="static/videos/tracking/dino_017.mp4" type="video/mp4">
-              </video>
-            </div>
-            <div class="column has-text-centered">
-              <video width="100%" controls>
-                <source src="static/videos/tracking/vfs_017.mp4" type="video/mp4">
-              </video>
-            </div>
-            <div class="column has-text-centered">
-              <video width="100%" controls>
-                <source src="static/videos/tracking/cog_017.mp4" type="video/mp4">
-              </video>
-            </div>
-          </div>
-
-          <!-- Row 3 -->
-          <div class="columns is-centered">
-            <div class="column has-text-centered">
-              <video width="100%" controls>
-                <source src="static/videos/tracking/dino_027.mp4" type="video/mp4">
-              </video>
-            </div>
-            <div class="column has-text-centered">
-              <video width="100%" controls>
-                <source src="static/videos/tracking/vfs_027.mp4" type="video/mp4">
-              </video>
-            </div>
-            <div class="column has-text-centered">
-              <video width="100%" controls>
-                <source src="static/videos/tracking/cog_027.mp4" type="video/mp4">
-              </video>
-            </div>
-          </div>
-  
-          <div class="content has-text-justified" style="font-size: 18px;">
-              <b>Qualitative comparison with previous video foundation models:</b>
-              DiffTrack on CogVideoX-5B produces smoother and more accurate trajectories compared to DINOv2 and VFS, which struggle with temporal dynamics and often yield inconsistent tracks.
-          </div>
-
-
-        </div>
-      </div>
-    </div>
- <br><br>
-
- <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title">DiffTrack for Motion Enhanced Video Generation</h2>
-      </div>
-    </div>
-
-    <div class="columns is-centered">
-      <div class="column is-four-fifths">
-
-      <!-- Row 1 -->
-      <div class="columns is-centered">
-        <div class="column is-half has-text-centered">
-          <h4 class="subtitle is-size-3">CogVideoX-5B</h4>
-          <video width="100%" controls>
-            <source src="static/videos/motion/004.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-        <div class="column is-half has-text-centered">
-          <h4 class="subtitle is-size-3">Motion Enhanced CogVideoX-5B</h4>
-          <video width="100%" controls>
-            <source src="static/videos/motion/video_4.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-      </div>
-      <div class="columns is-centered">
-        <div class="column is-full has-text-centered">
-          <p style="font-size: 16px; margin-top: -10px;">
-            <strong>Prompt:</strong><i> "... He takes a slow, appreciative sip, his eyes closing momentarily as he savors the complex flavors. ..."</i>
-          </p>
-        </div>
-      </div>
-
-      <!-- Row 2 -->
-      <div class="columns is-centered">
-        <div class="column is-half has-text-centered">
-          <video width="100%" controls>
-            <source src="static/videos/motion/087.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-        <div class="column is-half has-text-centered">
-          <video width="100%" controls>
-            <source src="static/videos/motion/video_87.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-      </div>
-      <div class="columns is-centered">
-        <div class="column is-full has-text-centered">
-          <p style="font-size: 16px; margin-top: -10px;">
-            <strong>Prompt:</strong><i> "A determined individual, ...ascends a thick, rugged rope hanging from a towering rock face. ..."</i>
-          </p>
-        </div>
-      </div>
-
-      <!-- Row 3 -->
-      <div class="columns is-centered">
-        <div class="column is-half has-text-centered">
-          <video width="100%" controls>
-            <source src="static/videos/motion/026.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-        <div class="column is-half has-text-centered">
-          <video width="100%" controls>
-            <source src="static/videos/motion/video_26.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-      </div>
-      <div class="columns is-centered">
-        <div class="column is-full has-text-centered">
-          <p style="font-size: 16px; margin-top: -10px;">
-            <strong>Prompt:</strong><i> “... its claws scratching the ground to uncover hidden seeds and insects ...”</i>
-          </p>
-        </div>
-      </div>
-
-
-        <div class="content has-text-justified" style="font-size: 18px;">
-          <b>Qualitative comparison with baseline and motion enhanced video:</b> CAG(Cross-Attention Guidance) enhances temporal matching and corrects motion inconsistencies in the synthesized videos.
-        </div>
-
-      </div>
-    </div>
-  </div>
     
     <section class="section">
       <div class="container is-max-desktop">
