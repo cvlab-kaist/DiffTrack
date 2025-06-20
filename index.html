@@ -16,11 +16,11 @@
   </script>
   <meta charset="utf-8">
   <meta name="description"
-        content="Emergent Temporal Correspondences from Video Diffusion Models">
+        content="Emergent Temporal Correspondences from Video Diffusion Transformers">
   <meta name="keywords" content="Diffusion, Matching">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
-  <title>Emergent Temporal Correspondences from Video Diffusion Models</title>
+  <title>Emergent Temporal Correspondences from Video Diffusion Transformers</title>
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
         rel="stylesheet">
 
@@ -61,7 +61,7 @@
         <div class="column has-text-centered">
           <h1 class="title publication-title" style="font-size: 46px;">
             <img src="static/images/difftrack.png" alt="Project Logo" style="max-height: 80px;">
-            Emergent Temporal Correspondences from Video Diffusion Models</h1> 
+            Emergent Temporal Correspondences from Video Diffusion Transformers</h1> 
           <div class="publication-authors">
             <span class="author-block">
               <a href="https://scholar.google.com/citations?hl=zh-CN&user=xakYe8MAAAAJ">Jisu Nam<sup>*1</sup></a>,
@@ -127,34 +127,39 @@
 
     </div>
   </div>
-<!-- 
-
-  <section class="section">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column is-four-fifths">
-          <div class="content has-text-justified">
-            <p style="font-size: 18px;">
-              We introduce <b>DiffTrack</b>, a framework that unveils how video diffusion transformers (DiTs) establish temporal correspondences during video generation. <b>DiffTrack</b> quantitatively analyzes the roles of different representations, layers, and timesteps within the full 3D attention mechanism of DiTs in the context of temporal matching. As practical applications, <b>DiffTrack</b> can extract motion trajectories along the video generation and also enables zero-shot point tracking on real-world videos.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-   -->
-
 
   <section class="section">
     <div class="container is-max-widescreen">
       <div class="columns is-centered">
         <div class="column is-full">
           <div class="content has-text-justified">
-            <img class="main-image" src="static/images/teaser.png" alt="Teaser Image" style="width: 100%; height: auto; margin-bottom: 10px;">
+            <div class="columns is-multiline is-centered">
+              <div class="column is-one-quarter has-text-centered">
+                <video width="100%" autoplay muted loop playsinline>
+                  <source src="static/videos/teaser/fg_1.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="column is-one-quarter has-text-centered">
+                <video width="100%" autoplay muted loop playsinline>
+                  <source src="static/videos/teaser/fg_2.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="column is-one-quarter has-text-centered">
+                <video width="100%" autoplay muted loop playsinline>
+                  <source src="static/videos/teaser/bg1.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="column is-one-quarter has-text-centered">
+                <video width="100%" autoplay muted loop playsinline>
+                  <source src="static/videos/teaser/bg2.mp4" type="video/mp4">
+                </video>
+              </div>
+              <img class="main-image" src="static/images/teaser.png" alt="Teaser Image" style="width: 100%; height: auto; margin-bottom: 10px;">
+            </div>
             <p style="font-size: 18px;">
               <b>Overview of DiffTrack:</b>  
-              DiffTrack reveals how Video Diffusion Transformers (DiTs) establish temporal correspondences during video generation. Given a prompt and starting points in the first frame, DiffTrack tracks how individual points align across subsequent frames in video DiTs (second row), enabling the extraction of coherent motion trajectories (third row) from both generated and real-world videos in a zero-shot manner.
-              As practical applications, <b>DiffTrack</b> also enables 1) motion-enhanced video generation with a novel guidance method and 2) zero-shot point tracking, achieving state-of-the-art performance compared to existing vision foundation models
+              DiffTrack reveals how Video Diffusion Transformers (DiTs) establish temporal correspondences during video generation. Given a prompt and starting points in the first frame, DiffTrack tracks how individual points align across subsequent frames in video DiTs, enabling the extraction of coherent motion trajectoriesb from both generated and real-world videos in a zero-shot manner.
+              As practical applications, DiffTrack also enables <b>1) motion-enhanced video generation with a novel guidance method</b> and <b>2) zero-shot point tracking</b>.
             </p>
           </div>
         </div>
@@ -162,96 +167,39 @@
     </div>
   </section>
   
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title">Analysis of Temporal Matching in CogVideoX-5B</h2>
+        </div>
+      </div>
   
- <div class="container is-max-desktop">
-  <div class="columns is-centered has-text-centered">
-    <div class="column is-four-fifths">
-      <h2 class="title">DiffTrack for Motion Enhanced Video Generation</h2>
-    </div>
-  </div>
-
-  <div class="columns is-centered">
-    <div class="column is-four-fifths">
-
-    <!-- Row 1 -->
-    <div class="columns is-centered">
-      <div class="column is-half has-text-centered">
-        <h4 class="subtitle is-size-3">CogVideoX-5B</h4>
-        <video width="100%" autoplay muted loop playsinline>
-          <source src="static/videos/motion/004.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-      </div>
-      <div class="column is-half has-text-centered">
-        <h4 class="subtitle is-size-3">Motion Enhanced CogVideoX-5B</h4>
-        <video width="100%" autoplay muted loop playsinline>
-          <source src="static/videos/motion/video_4.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+          <img src="static/images/analysis_5b.png" style="width: 100%; margin-top: 20px; margin-bottom: 10px;">
+  
+          <div class="content has-text-justified" style="font-size: 18px;">
+            <ul style="list-style-type: disc; margin-left: 1.5em;">
+              <li>
+                <b><i>Representation selection:</i></b>  
+                Query-key matching achieves higher accuracy than intermediate feature matching, providing better representations for temporal matching.
+              </li>
+              <li>
+                <b><i>Layer-wise analysis:</i></b>  
+                The harmonic mean of query-key matching across layers and timesteps reveals that temporal correspondence is primarily governed by a limited set of layers.
+              </li>
+              <li>
+                <b><i>Noise-level analysis:</i></b>  
+                Temporal matching improves as noise decreases, with early timesteps relying more on text embeddings and self-frame attention, while later timesteps shift towards cross-frame attention for enhanced coherence.
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="columns is-centered">
-      <div class="column is-full has-text-centered">
-        <p style="font-size: 16px; margin-top: -10px;">
-          <strong>Prompt:</strong><i> "... He takes a slow, appreciative sip, his eyes closing momentarily as he savors the complex flavors. ..."</i>
-        </p>
-      </div>
-    </div>
-
-    <!-- Row 2 -->
-    <div class="columns is-centered">
-      <div class="column is-half has-text-centered">
-        <video width="100%" autoplay muted loop playsinline>
-          <source src="static/videos/motion/087.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-      </div>
-      <div class="column is-half has-text-centered">
-        <video width="100%" autoplay muted loop playsinline>
-          <source src="static/videos/motion/video_87.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-      </div>
-    </div>
-    <div class="columns is-centered">
-      <div class="column is-full has-text-centered">
-        <p style="font-size: 16px; margin-top: -10px;">
-          <strong>Prompt:</strong><i> "A determined individual, ...ascends a thick, rugged rope hanging from a towering rock face. ..."</i>
-        </p>
-      </div>
-    </div>
-
-    <!-- Row 3 -->
-    <div class="columns is-centered">
-      <div class="column is-half has-text-centered">
-        <video width="100%" autoplay muted loop playsinline>
-          <source src="static/videos/motion/026.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-      </div>
-      <div class="column is-half has-text-centered">
-        <video width="100%" autoplay muted loop playsinline>
-          <source src="static/videos/motion/video_26.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-      </div>
-    </div>
-    <div class="columns is-centered">
-      <div class="column is-full has-text-centered">
-        <p style="font-size: 16px; margin-top: -10px;">
-          <strong>Prompt:</strong><i> “... its claws scratching the ground to uncover hidden seeds and insects ...”</i>
-        </p>
-      </div>
-    </div>
-
-
-      <div class="content has-text-justified" style="font-size: 18px;">
-        <b>Qualitative comparison with baseline and motion enhanced video:</b> CAG(Cross-Attention Guidance) enhances temporal matching and corrects motion inconsistencies in the synthesized videos.
-      </div>
-
-    </div>
-  </div>
-</div>
+  </section>
+  
 
     
    
@@ -383,40 +331,97 @@
       </div>
     </div>
  <br><br>
- <section class="section">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          <h2 class="title">Analysis of Temporal Matching in CogVideoX-5B</h2>
-        </div>
+ <div class="container is-max-desktop">
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-four-fifths">
+      <h2 class="title">DiffTrack for Motion Enhanced Video Generation</h2>
+    </div>
+  </div>
+
+  <div class="columns is-centered">
+    <div class="column is-four-fifths">
+
+    <!-- Row 1 -->
+    <div class="columns is-centered">
+      <div class="column is-half has-text-centered">
+        <h4 class="subtitle is-size-3">CogVideoX-5B</h4>
+        <video width="100%" autoplay muted loop playsinline>
+          <source src="static/videos/motion/004.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
       </div>
-  
-      <div class="columns is-centered">
-        <div class="column is-four-fifths">
-          <img src="static/images/analysis_5b.png" style="width: 100%; margin-top: 20px; margin-bottom: 10px;">
-  
-          <div class="content has-text-justified" style="font-size: 18px;">
-            <ul style="list-style-type: disc; margin-left: 1.5em;">
-              <li>
-                <b><i>Representation selection:</i></b>  
-                Query-key matching achieves higher accuracy than intermediate feature matching, providing better representations for temporal matching.
-              </li>
-              <li>
-                <b><i>Layer-wise analysis:</i></b>  
-                The harmonic mean of query-key matching across layers and timesteps reveals that temporal correspondence is primarily governed by a limited set of layers.
-              </li>
-              <li>
-                <b><i>Noise-level analysis:</i></b>  
-                Temporal matching improves as noise decreases, with early timesteps relying more on text embeddings and self-frame attention, while later timesteps shift towards cross-frame attention for enhanced coherence.
-              </li>
-            </ul>
-          </div>
-        </div>
+      <div class="column is-half has-text-centered">
+        <h4 class="subtitle is-size-3">Motion Enhanced CogVideoX-5B</h4>
+        <video width="100%" autoplay muted loop playsinline>
+          <source src="static/videos/motion/video_4.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
       </div>
     </div>
-  </section>
-  
+    <div class="columns is-centered">
+      <div class="column is-full has-text-centered">
+        <p style="font-size: 16px; margin-top: -10px;">
+          <strong>Prompt:</strong><i> "... He takes a slow, appreciative sip, his eyes closing momentarily as he savors the complex flavors. ..."</i>
+        </p>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="columns is-centered">
+      <div class="column is-half has-text-centered">
+        <video width="100%" autoplay muted loop playsinline>
+          <source src="static/videos/motion/087.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="column is-half has-text-centered">
+        <video width="100%" autoplay muted loop playsinline>
+          <source src="static/videos/motion/video_87.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-full has-text-centered">
+        <p style="font-size: 16px; margin-top: -10px;">
+          <strong>Prompt:</strong><i> "A determined individual, ...ascends a thick, rugged rope hanging from a towering rock face. ..."</i>
+        </p>
+      </div>
+    </div>
+
+    <!-- Row 3 -->
+    <div class="columns is-centered">
+      <div class="column is-half has-text-centered">
+        <video width="100%" autoplay muted loop playsinline>
+          <source src="static/videos/motion/015.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="column is-half has-text-centered">
+        <video width="100%" autoplay muted loop playsinline>
+          <source src="static/videos/motion/video_15.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-full has-text-centered">
+        <p style="font-size: 16px; margin-top: -10px;">
+          <strong>Prompt:</strong><i>"A motorcycle cruising along a coastal highway."</i>
+        </p>
+      </div>
+    </div>
+
+
+      <div class="content has-text-justified" style="font-size: 18px;">
+        <b>Qualitative comparison with baseline and motion enhanced video:</b> CAG(Cross-Attention Guidance) enhances temporal matching and corrects motion inconsistencies in the synthesized videos.
+      </div>
+
+    </div>
+  </div>
+</div> 
     
+
     <section class="section">
       <div class="container is-max-desktop">
         
