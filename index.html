@@ -134,34 +134,38 @@
         <div class="column is-full">
           <div class="content has-text-justified">
             <div class="columns is-multiline is-centered">
-              <div class="column is-one-quarter has-text-centered">
+              <!-- <div class="column is-one-quarter has-text-centered">
                 <video width="100%" autoplay muted loop playsinline>
                   <source src="static/videos/teaser/fg_1.mp4" type="video/mp4">
                 </video>
-              </div>
-              <div class="column is-one-quarter has-text-centered">
+              </div> -->
+              <div class="column is-one-half has-text-centered">
                 <video width="100%" autoplay muted loop playsinline>
                   <source src="static/videos/teaser/fg_2.mp4" type="video/mp4">
                 </video>
               </div>
-              <div class="column is-one-quarter has-text-centered">
+              <div class="column is-one-half has-text-centered">
                 <video width="100%" autoplay muted loop playsinline>
                   <source src="static/videos/teaser/bg1.mp4" type="video/mp4">
                 </video>
               </div>
-              <div class="column is-one-quarter has-text-centered">
+              <!-- <div class="column is-one-half has-text-centered">
                 <video width="100%" autoplay muted loop playsinline>
                   <source src="static/videos/teaser/bg2.mp4" type="video/mp4">
                 </video>
-              </div>
+              </div> -->
+              
+
+              <!-- <br><br><br> -->
+
+              <!-- <img class="main-image" src="static/images/teaser_attn.png" alt="Teaser Image" style="width: 100%; height: auto; margin-bottom: 10px;"> -->
+            </div>
+            <div class="has-text-centered">
               <p style="font-size: 18px;">
                 <b>TL;DR:</b> Generated videos by video diffusion transformer (DiT) with emergent temporal correspondence
               </p>
-
-              <br><br><br>
-
-              <img class="main-image" src="static/images/teaser_attn.png" alt="Teaser Image" style="width: 100%; height: auto; margin-bottom: 10px;">
             </div>
+
             <p style="font-size: 18px;">
               <b>Overview of DiffTrack:</b>  
               DiffTrack reveals how Video Diffusion Transformers (DiTs) establish temporal correspondences during video generation. Given a prompt and starting points in the first frame, DiffTrack tracks how individual points align across subsequent frames in video DiTs, enabling the extraction of coherent motion trajectoriesb from both generated and real-world videos in a zero-shot manner.
