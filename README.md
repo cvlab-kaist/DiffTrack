@@ -185,5 +185,13 @@ CUDA_VISIBLE_DEVICES=0 python motion_guidance.py \
 ### Citing this Work
 Please use the following bibtex to cite our work:
 ```
-
+@misc{nam2025emergenttemporalcorrespondencesvideo,
+    title={Emergent Temporal Correspondences from Video Diffusion Transformers},
+    author={Jisu Nam and Soowon Son and Dahyun Chung and Jiyoung Kim and Siyoon Jin and Junhwa Hur and Seungryong Kim},
+    year={2025},
+    eprint={2506.17220},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV},
+    url={https://arxiv.org/abs/2506.17220},
+}
 ```
