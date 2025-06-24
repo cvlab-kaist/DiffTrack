@@ -23,7 +23,7 @@ To address this fundamental question, we present
 
 **DiffTrack** - a unified framework for uncovering and exploiting emergent temporal correspondences in video diffusion models. DiffTrack introduces:
 
-**📊 Novel Evaluation Metrics** specifically designed to quantify temporal correspondence in video DiTs.
+**📊 Novel Evaluation Metrics** specifically designed to quantify temporal correspondences in video DiTs.
 
 **🚀 Two Practical Applications**
 - [**Zero-shot Point Tracking**](#2-zero-shot-point-tracking)  achieving state-of-the-art (SOTA) performance.
