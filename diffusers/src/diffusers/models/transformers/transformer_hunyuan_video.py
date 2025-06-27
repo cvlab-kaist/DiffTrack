@@ -139,12 +139,12 @@ class HunyuanVideoAttnProcessor2_0:
         head_dim = inner_dim // attn.heads
 
         if args['trajectory']:
-            f_num = query[:, :, :-text_seq_length].shape[2] // (h*w)  # 17550 // (30*45) => 13
+            f_num = query[:, :, :-text_seq_length].shape[2] // (h*w)
             
             if args['query_coords'] is None:
                 grid_size = 20 if args['video_mode'] == 'fg' else 10
-                xy = get_points_on_a_grid(grid_size, (H, W), device=query.device) # torch.Size([1, grid*grid, 2]) 첫번째 RGB 프레임에 grid 찍기
-                queried_coords = xy / stride # 원본 dimension -> latent dimension에 맞추기 
+                xy = get_points_on_a_grid(grid_size, (H, W), device=query.device)
+                queried_coords = xy / stride
             else:
                 queried_coords = args['query_coords'].to(query.device) / stride
             
@@ -164,9 +164,9 @@ class HunyuanVideoAttnProcessor2_0:
                 attn_tts = attn_tts.mean(1)
                 attn_stt = attn_stt.mean(1)
 
-                correlation_from_t_to_s = rearrange(attn_tts, 'b (h w) c -> b c h w', h=h, w=w) # head mean
+                correlation_from_t_to_s = rearrange(attn_tts, 'b (h w) c -> b c h w', h=h, w=w)
                 correlation_from_t_to_s_T = rearrange(attn_stt, 'b c (h w) -> b c h w', h=h, w=w)
-                correlation_from_t_to_s = (correlation_from_t_to_s + correlation_from_t_to_s_T) / 2 # torch.Size([1, 1350, 30, 45])
+                correlation_from_t_to_s = (correlation_from_t_to_s + correlation_from_t_to_s_T) / 2
                 
                 (x_source, y_source, x_target, y_target, score) = corr_to_matches(correlation_from_t_to_s.view(1, h, w, h, w).unsqueeze(1), get_maximum=True, do_softmax=True, device=query.device)
                 mapping_set = torch.cat((x_source.unsqueeze(-1), y_source.unsqueeze(-1)), dim=-1).view(1, h, w, 2).permute(0, 3, 1, 2)
@@ -180,7 +180,7 @@ class HunyuanVideoAttnProcessor2_0:
                 grid = sampled_queried_coords.view(B, N, 1, 2).to(query.device)
                 
                 track = F.grid_sample(mapping_set.to(query.device), grid=grid, align_corners=True)
-                track = rearrange(track, "b c h w -> b () (h w) c") # torch.Size([1, 1, 25, 2])
+                track = rearrange(track, "b c h w -> b () (h w) c")
                 tracks_qk.append(track)
 
             trajectory_qk = torch.cat(tracks_qk, dim=1)
@@ -189,8 +189,8 @@ class HunyuanVideoAttnProcessor2_0:
             scaling_factor_x = stride 
             scaling_factor_y = stride
 
-            trajectory_qk[..., 0] *= scaling_factor_x  # X축 스케일링
-            trajectory_qk[..., 1] *= scaling_factor_y  # Y축 스케일링
+            trajectory_qk[..., 0] *= scaling_factor_x
+            trajectory_qk[..., 1] *= scaling_factor_y
 
             self.trajectory_qk = trajectory_qk
 
@@ -200,7 +200,7 @@ class HunyuanVideoAttnProcessor2_0:
             for k in range(1, f_num):
                 attn_tts = (mat_hidden_states[:, 0, :, :] @ mat_hidden_states[:, k, :, :].transpose(-1, -2))
                 attn_tts = attn_tts.softmax(dim=-1)
-                correlation_from_t_to_s = rearrange(attn_tts, 'b (h w) c -> b c h w', h=h, w=w) # head mean
+                correlation_from_t_to_s = rearrange(attn_tts, 'b (h w) c -> b c h w', h=h, w=w)
                 
                 (x_source, y_source, x_target, y_target, score) = corr_to_matches(correlation_from_t_to_s.view(1, h, w, h, w).unsqueeze(1), get_maximum=True, do_softmax=True, device=query.device)
                 mapping_set = torch.cat((x_source.unsqueeze(-1), y_source.unsqueeze(-1)), dim=-1).view(1, h, w, 2).permute(0, 3, 1, 2)
@@ -214,7 +214,7 @@ class HunyuanVideoAttnProcessor2_0:
                 grid = sampled_queried_coords.view(B, N, 1, 2).to(query.device)
                 
                 track = F.grid_sample(mapping_set.to(query.device), grid=grid, align_corners=True)
-                track = rearrange(track, "b c h w -> b () (h w) c") # torch.Size([1, 1, 25, 2])
+                track = rearrange(track, "b c h w -> b () (h w) c")
                 tracks_feat.append(track)
 
             trajectory_feat = torch.cat(tracks_feat, dim=1)
@@ -223,16 +223,16 @@ class HunyuanVideoAttnProcessor2_0:
             scaling_factor_x = stride 
             scaling_factor_y = stride
 
-            trajectory_feat[..., 0] *= scaling_factor_x  # X축 스케일링
-            trajectory_feat[..., 1] *= scaling_factor_y  # Y축 스케일링
+            trajectory_feat[..., 0] *= scaling_factor_x
+            trajectory_feat[..., 1] *= scaling_factor_y
 
             self.trajectory_feat = trajectory_feat
             
         if args['attn_weight']:
             if args['query_coords'] is None:
                 grid_size = 20 if args['video_mode'] == 'fg' else 10
-                xy = get_points_on_a_grid(grid_size, (H, W), device=query.device) # torch.Size([1, grid*grid, 2]) 첫번째 RGB 프레임에 grid 찍기
-                queried_coords = xy / stride # 원본 dimension -> latent dimension에 맞추기 
+                xy = get_points_on_a_grid(grid_size, (H, W), device=query.device)
+                queried_coords = xy / stride
             else:
                 queried_coords = args['query_coords'].to(query.device) / stride
             queried_coords = torch.round(queried_coords).to(torch.int)

@@ -1683,8 +1683,6 @@ class PAGCFGJointAttnProcessor2_0_CogVideoX:
     ) -> torch.Tensor:
         text_seq_length = encoder_hidden_states.size(1)
 
-        # hidden_states = torch.cat([encoder_hidden_states, hidden_states], dim=1)
-
         #  Step 1: Chunk input into uncond, org, ptb
         hidden_states_uncond, hidden_states_org, hidden_states_ptb = hidden_states.chunk(3)
         encoder_hidden_states_uncond, encoder_hidden_states_org, encoder_hidden_states_ptb = encoder_hidden_states.chunk(3)
@@ -1746,10 +1744,6 @@ class PAGCFGJointAttnProcessor2_0_CogVideoX:
         # ============== perturbed path ==============
         batch_size, sequence_length, _ = hidden_states_ptb.shape
 
-        # if attention_mask is not None:
-        #     attention_mask = attn.prepare_attention_mask(attention_mask, sequence_length, batch_size)
-        #     attention_mask = attention_mask.view(batch_size, attn.heads, -1, attention_mask.shape[-1])
-
         query_ptb = attn.to_q(hidden_states_ptb)
         key_ptb = attn.to_k(hidden_states_ptb)
         value_ptb = attn.to_v(hidden_states_ptb)
@@ -1784,10 +1778,6 @@ class PAGCFGJointAttnProcessor2_0_CogVideoX:
             query_ptb[:, :, text_seq_length:] = apply_rotary_emb(query_ptb[:, :, text_seq_length:], image_rotary_emb)
             if not attn.is_cross_attention:
                 key_ptb[:, :, text_seq_length:] = apply_rotary_emb(key_ptb[:, :, text_seq_length:], image_rotary_emb)
-
-        # hidden_states_ptb = F.scaled_dot_product_attention(
-        #     query_ptb, key_ptb, value_ptb, attn_mask=full_mask, dropout_p=0.0, is_causal=False
-        # )
         
         hidden_states_ptb = efficient_scaled_dot_product_attention(
             query_ptb, key_ptb, value_ptb, attn_mask=full_mask, dropout_p=0.0, is_causal=False
@@ -1804,7 +1794,6 @@ class PAGCFGJointAttnProcessor2_0_CogVideoX:
             [text_seq_length, hidden_states_ptb.size(1) - text_seq_length], dim=1
         ) # torch.Size([1, 226, 1920]), torch.Size([1, 17324, 1920])
 
-        ######## concat #########
         hidden_states = torch.cat([hidden_states_org, hidden_states_ptb])
         encoder_hidden_states = torch.cat([encoder_hidden_states_org, encoder_hidden_states_ptb])
 
@@ -1879,15 +1868,9 @@ class PAGJointAttnProcessor2_0_CogVideoX:
     ) -> torch.Tensor:
         text_seq_length = encoder_hidden_states.size(1)
 
-        # hidden_states = torch.cat([encoder_hidden_states, hidden_states], dim=1)
-
         #  Step 1: Chunk input into uncond, org, ptb
         hidden_states_org, hidden_states_ptb = hidden_states.chunk(2)
         encoder_hidden_states_org, encoder_hidden_states_ptb = encoder_hidden_states.chunk(2)
-
-        # Step 2: Concatenate uncond + org for joint processing
-        # hidden_states_org = torch.cat([hidden_states_uncond, hidden_states_org], dim=0)
-        # encoder_hidden_states_org = torch.cat([encoder_hidden_states_uncond, encoder_hidden_states_org], dim=0)
 
         hidden_states_org = torch.cat([encoder_hidden_states_org, hidden_states_org], dim=1)
         hidden_states_ptb = torch.cat([encoder_hidden_states_ptb, hidden_states_ptb], dim=1)
@@ -1942,10 +1925,6 @@ class PAGJointAttnProcessor2_0_CogVideoX:
         # ============== perturbed path ==============
         batch_size, sequence_length, _ = hidden_states_ptb.shape
 
-        # if attention_mask is not None:
-        #     attention_mask = attn.prepare_attention_mask(attention_mask, sequence_length, batch_size)
-        #     attention_mask = attention_mask.view(batch_size, attn.heads, -1, attention_mask.shape[-1])
-
         query_ptb = attn.to_q(hidden_states_ptb)
         key_ptb = attn.to_k(hidden_states_ptb)
         value_ptb = attn.to_v(hidden_states_ptb)
@@ -1996,7 +1975,6 @@ class PAGJointAttnProcessor2_0_CogVideoX:
             [text_seq_length, hidden_states_ptb.size(1) - text_seq_length], dim=1
         )
 
-        ######## concat #########
         hidden_states = torch.cat([hidden_states_org, hidden_states_ptb])
         encoder_hidden_states = torch.cat([encoder_hidden_states_org, encoder_hidden_states_ptb])
 
@@ -3229,12 +3207,12 @@ class CogVideoXAttnProcessor2_0:
         w = W // stride
         if args['trajectory']:  
          
-            f_num = query[:, :, text_seq_length:].shape[2] // (h*w)  # 17550 // (30*45) => 13
+            f_num = query[:, :, text_seq_length:].shape[2] // (h*w)
             
             if args['query_coords'] is None:
                 grid_size = 20 if args['video_mode'] == 'fg' else 10
-                xy = get_points_on_a_grid(grid_size, (H, W), device=query.device) # torch.Size([1, grid*grid, 2]) 첫번째 RGB 프레임에 grid 찍기
-                queried_coords = xy / stride # 원본 dimension -> latent dimension에 맞추기 
+                xy = get_points_on_a_grid(grid_size, (H, W), device=query.device)
+                queried_coords = xy / stride
             else:
                 queried_coords = args['query_coords'].to(query.device) / stride
             
@@ -3254,9 +3232,9 @@ class CogVideoXAttnProcessor2_0:
                 attn_tts = attn_tts.mean(1)
                 attn_stt = attn_stt.mean(1)
 
-                correlation_from_t_to_s = rearrange(attn_tts, 'b (h w) c -> b c h w', h=h, w=w) # head mean
+                correlation_from_t_to_s = rearrange(attn_tts, 'b (h w) c -> b c h w', h=h, w=w)
                 correlation_from_t_to_s_T = rearrange(attn_stt, 'b c (h w) -> b c h w', h=h, w=w)
-                correlation_from_t_to_s = (correlation_from_t_to_s + correlation_from_t_to_s_T) / 2 # torch.Size([1, 1350, 30, 45])
+                correlation_from_t_to_s = (correlation_from_t_to_s + correlation_from_t_to_s_T) / 2
                 (x_source, y_source, x_target, y_target, score) = corr_to_matches(correlation_from_t_to_s.view(1, h, w, h, w).unsqueeze(1).to(query.device), get_maximum=True, do_softmax=True, device=query.device)
                 mapping_set = torch.cat((x_source.unsqueeze(-1), y_source.unsqueeze(-1)), dim=-1).view(1, h, w, 2).permute(0, 3, 1, 2)
 
@@ -3269,7 +3247,7 @@ class CogVideoXAttnProcessor2_0:
                 grid = sampled_queried_coords.view(B, N, 1, 2).to(query.device)
                 
                 track = F.grid_sample(mapping_set.to(query.device), grid=grid, align_corners=True)
-                track = rearrange(track, "b c h w -> b () (h w) c") # torch.Size([1, 1, 25, 2])
+                track = rearrange(track, "b c h w -> b () (h w) c")
                 tracks_qk.append(track)
 
                 del correlation_from_t_to_s
@@ -3280,8 +3258,8 @@ class CogVideoXAttnProcessor2_0:
             scaling_factor_x = stride 
             scaling_factor_y = stride
 
-            trajectory_qk[..., 0] *= scaling_factor_x  # X축 스케일링
-            trajectory_qk[..., 1] *= scaling_factor_y  # Y축 스케일링
+            trajectory_qk[..., 0] *= scaling_factor_x
+            trajectory_qk[..., 1] *= scaling_factor_y
 
             self.trajectory_qk = trajectory_qk
 
@@ -3291,7 +3269,7 @@ class CogVideoXAttnProcessor2_0:
             for k in range(1, f_num):
                 attn_tts = (mat_hidden_states[:, 0, :, :] @ mat_hidden_states[:, k, :, :].transpose(-1, -2))
                 attn_tts = attn_tts.softmax(dim=-1)
-                correlation_from_t_to_s = rearrange(attn_tts, 'b (h w) c -> b c h w', h=h, w=w) # head mean
+                correlation_from_t_to_s = rearrange(attn_tts, 'b (h w) c -> b c h w', h=h, w=w)
                 
                 (x_source, y_source, x_target, y_target, score) = corr_to_matches(correlation_from_t_to_s.view(1, h, w, h, w).unsqueeze(1), get_maximum=True, do_softmax=True, device=query.device)
                 mapping_set = torch.cat((x_source.unsqueeze(-1), y_source.unsqueeze(-1)), dim=-1).view(1, h, w, 2).permute(0, 3, 1, 2)
@@ -3305,7 +3283,7 @@ class CogVideoXAttnProcessor2_0:
                 grid = sampled_queried_coords.view(B, N, 1, 2).to(query.device)
                 
                 track = F.grid_sample(mapping_set.to(query.device), grid=grid, align_corners=True)
-                track = rearrange(track, "b c h w -> b () (h w) c") # torch.Size([1, 1, 25, 2])
+                track = rearrange(track, "b c h w -> b () (h w) c")
                 tracks_feat.append(track)
 
             trajectory_feat = torch.cat(tracks_feat, dim=1)
@@ -3314,8 +3292,8 @@ class CogVideoXAttnProcessor2_0:
             scaling_factor_x = stride 
             scaling_factor_y = stride
 
-            trajectory_feat[..., 0] *= scaling_factor_x  # X축 스케일링
-            trajectory_feat[..., 1] *= scaling_factor_y  # Y축 스케일링
+            trajectory_feat[..., 0] *= scaling_factor_x
+            trajectory_feat[..., 1] *= scaling_factor_y
 
             self.trajectory_feat = trajectory_feat
 
@@ -3323,8 +3301,8 @@ class CogVideoXAttnProcessor2_0:
         if args['attn_weight']:
             if args['query_coords'] is None:
                 grid_size = 20 if args['video_mode'] == 'fg' else 10
-                xy = get_points_on_a_grid(grid_size, (H, W), device=query.device) # torch.Size([1, grid*grid, 2]) 첫번째 RGB 프레임에 grid 찍기
-                queried_coords = xy / stride # 원본 dimension -> latent dimension에 맞추기 
+                xy = get_points_on_a_grid(grid_size, (H, W), device=query.device)
+                queried_coords = xy / stride
             else:
                 queried_coords = args['query_coords'].to(query.device) / stride
             queried_coords = torch.round(queried_coords).to(torch.int)
@@ -3338,7 +3316,7 @@ class CogVideoXAttnProcessor2_0:
             first_query = first_query.reshape(head_num, h, w, d_k)[:, x_pos, y_pos, :]
     
             attn_score = torch.matmul(first_query, key[1].transpose(-2, -1)) / torch.sqrt(torch.tensor(d_k))
-            attn_probs = torch.nn.functional.softmax(attn_score, dim=-1)  # Shape: [1, 30, 2048, 2048]
+            attn_probs = torch.nn.functional.softmax(attn_score, dim=-1)
             attn_weight = attn_probs.mean(0)
 
             self.attn_weight = attn_weight

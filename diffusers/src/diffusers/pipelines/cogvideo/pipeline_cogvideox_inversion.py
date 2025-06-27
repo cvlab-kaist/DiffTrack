@@ -361,27 +361,9 @@ class CogVideoXInversePipeline(DiffusionPipeline, CogVideoXLoraLoaderMixin):
                 f" size of {batch_size}. Make sure the batch size matches the length of the generators."
             )
 
-        # num_frames = (video.size(2) - 1) // self.vae_scale_factor_temporal + 1 if latents is None else latents.size(1)
-
-        # shape = (
-        #     batch_size,
-        #     num_frames,
-        #     num_channels_latents,
-        #     height // self.vae_scale_factor_spatial,
-        #     width // self.vae_scale_factor_spatial,
-        # )
-
-
         if latents is None:
             assert video is not None
-            # num_frames = (video.size(2) - 1) // self.vae_scale_factor_temporal + 1 if latents is None else latents.size(1)
-            # shape = (
-            #     batch_size,
-            #     num_frames,
-            #     num_channels_latents,
-            #     height // self.vae_scale_factor_spatial,
-            #     width // self.vae_scale_factor_spatial,
-            # )
+
             if frame_as_latent:
                 num_frames = video.size(2)
                 video = video.squeeze(0).unsqueeze(2)
@@ -759,8 +741,6 @@ class CogVideoXInversePipeline(DiffusionPipeline, CogVideoXLoraLoaderMixin):
         # For CogVideoX 1.5, the latent frames should be padded to make it divisible by patch_size_t
         patch_size_t = self.transformer.config.patch_size_t
         if patch_size_t is not None and latent_frames % patch_size_t != 0:
-            # additional_frames = patch_size_t - latent_frames % patch_size_t
-            # num_frames += additional_frames * self.vae_scale_factor_temporal
             raise ValueError(
                 f"The number of latent frames must be divisible by `{patch_size_t=}` but the given video "
                 f"contains {latent_frames=}, which is not divisible."
