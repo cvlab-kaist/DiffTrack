@@ -10,6 +10,8 @@
 
 <sup>*</sup> Equal contribution. <sup>&dagger;</sup>Co-corresponding author.
 
+<h3>NeurIPS 2025</h3>
+
 <a href="https://arxiv.org/abs/2506.17220"><img src='https://img.shields.io/badge/arXiv-DiffTrack-red' alt='Paper PDF'></a>
 <a href="https://cvlab-kaist.github.io/DiffTrack/"><img src='https://img.shields.io/badge/Project_Page-DiffTrack-green' alt='Project Page'></a>
 
